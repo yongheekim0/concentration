@@ -1,4 +1,90 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  border: 1px solid red;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex: 10fr 1fr;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-div {
+  /* viewport units: percentage of: vh (veiwport height), vw (veiwport width), vmin (min of vw or vh) */
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-div {
+  /* viewport units: percentage of: vh (veiwport height), vw (veiwport width), vmin (min of vw or vh) */
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  font-size: 4vmin;
+  color: darkblue;
+  letter-spacing: 1vmin;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(6, 16vmin);
+  grid-template-rows: repeat(4, 16vmin);
+  gap: 1vmin;
+  margin-top: 4vmin;
+}
+
+#board > div {
+  border-radius: 15%;
+  border: 0.2vmin solid gray;
+}
+
+#board > div:hover {
+  background-color: gray;
+}
+
+button {
+  margin-top: 10vmin;
+  padding: 1vmin;
+  font-size: 3vmin;
+  border-radius: 2vmin;
+  border: 0.1vmin solid gray;
+  color: gray;
+}
+
+button:hover {
+  color: white;
+  background-color: darkgray;
+}
+
+/* #state-board {
+  display: inline-block;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+ */
+.state {
+  padding: 0.3vmin 4vmin;
+  margin: 2vmin;
+  width: 15vmin;
+  border: 0.2vmin solid black;
+  border-radius: 10px;
+}
+
+h2 {
+  font-size: 3vmin;
 }
