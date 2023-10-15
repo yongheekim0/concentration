@@ -39,6 +39,13 @@ function init() {
   easyMode();
   normalMode();
 }
+
+function renders() {
+  renderCards();
+  shuffleAndImageRender();
+  checkCards();
+  resetTurns();
+}
 // event listners
 document.querySelector("button").addEventListener("click", function () {
   [...cards].forEach((element) => (element.style.visibility = "visible"));
@@ -53,10 +60,7 @@ function easyMode() {
     [...cards].forEach((element) => element.remove());
     cardNumbers = playSetup.cards16.numbers;
     playSetup.cards16.layout();
-    renderCards();
-    shuffleAndImageRender();
-    checkCards();
-    resetTurns();
+    renders();
   });
 }
 
@@ -67,10 +71,7 @@ function normalMode() {
     [...cards].forEach((element) => element.remove());
     cardNumbers = playSetup.cards24.numbers;
     playSetup.cards24.layout();
-    renderCards();
-    shuffleAndImageRender();
-    checkCards();
-    resetTurns();
+    renders();
   });
 }
 
