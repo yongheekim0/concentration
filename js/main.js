@@ -9,7 +9,7 @@ const playSetup = {
     },
   },
   cards16: {
-    numbers: 6,
+    numbers: 16,
     layout() {
       boardElement.style.gridTemplateColumns = "repeat(4, 16vmin)";
       boardElement.style.gridTemplateRows = "repeat(4, 16vmin)";
@@ -24,31 +24,63 @@ const cards = document.getElementsByClassName("card");
 const frontOfCards = document.getElementsByClassName("front");
 const backOfcards = document.getElementsByClassName("back");
 const turnsElement = document.getElementById("turns");
+const buttonNormal = document.getElementById("mode-normal");
+const buttonEasy = document.getElementById("mode-easy");
 
 // state variables
 
 let turnsStart = 0;
-let cardNumbers = playSetup.cards16.numbers;
-playSetup.cards16.layout();
+let cardNumbers;
 
 // renders
 init();
 function init() {
-  renderCards();
-  shuffleAndImageRender();
-  checkCards();
+  messageRender();
+  easyMode();
+  normalMode();
 }
 // event listners
 document.querySelector("button").addEventListener("click", function () {
   [...cards].forEach((element) => (element.style.visibility = "visible"));
   shuffleAndImageRender();
+  resetTurns();
 });
+
+function easyMode() {
+  buttonEasy.addEventListener("click", function () {
+    removeMessage();
+    if (cardNumbers === playSetup.cards16.numbers) return;
+    [...cards].forEach((element) => element.remove());
+    cardNumbers = playSetup.cards16.numbers;
+    playSetup.cards16.layout();
+    renderCards();
+    shuffleAndImageRender();
+    checkCards();
+    resetTurns();
+  });
+}
+
+function normalMode() {
+  buttonNormal.addEventListener("click", function () {
+    removeMessage();
+    if (cardNumbers === playSetup.cards24.numbers) return;
+    [...cards].forEach((element) => element.remove());
+    cardNumbers = playSetup.cards24.numbers;
+    playSetup.cards24.layout();
+    renderCards();
+    shuffleAndImageRender();
+    checkCards();
+    resetTurns();
+  });
+}
 
 let compareTwoCards = [];
 function checkCards() {
   [...frontOfCards].forEach((element) =>
     element.addEventListener("click", function (event) {
       if (compareTwoCards.length === 2) return;
+      console.log("clicked");
+      addTurns();
       event.target.parentNode.classList.toggle("is-flipped");
       compareTwoCards.push(event.target.parentNode);
       if (
@@ -135,12 +167,25 @@ function result() {
   }
 }
 
-//turnsElement.innerText = `Turns: ${turnsStart}`;
+function addTurns() {
+  turnsStart += 1;
+  turnsElement.innerText = `Turns: ${turnsStart}`;
+}
 
-/* function renderFlipEffect() {
-  [...cards].forEach((card) => {
-    card.addEventListener("click", function () {
-      card.classList.toggle("is-flipped");
-    });
-  });
-} */
+function resetTurns() {
+  turnsStart = 0;
+  turnsElement.innerText = `Turns: ${turnsStart}`;
+}
+
+function messageRender() {
+  const message = document.createElement("h3");
+  boardElement.appendChild(message);
+  message.innerHTML = "Choose Difficulty";
+  message.style.textAlign = "center";
+  message.style.lineHeight = "30vmin";
+  message.style.fontSize = "3vmin";
+  message.style.letterSpacing = "1vmin";
+}
+function removeMessage() {
+  document.querySelector("h3").style.display = "none";
+}
