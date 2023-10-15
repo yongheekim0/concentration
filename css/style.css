@@ -53,7 +53,7 @@ header {
   height: 100%; */
   transform-style: preserve-3d;
   transform-origin: center right;
-  transition: transform 1s;
+  transition: transform 0.2s;
 }
 .card__face {
   position: absolute;
@@ -69,6 +69,8 @@ header {
 
 .card__face.back {
   background: crimson;
+  text-align: center;
+  font-size: 15vmin;
   transform: rotateY(180deg);
 }
 
@@ -100,9 +102,10 @@ button:hover {
 .state {
   padding: 0.3vmin 4vmin;
   margin: 2vmin;
-  width: 15vmin;
+  width: 20vmin;
   border: 0.2vmin solid black;
   border-radius: 10px;
+  font-size: 3vmin;
 }
 
 h2 {
