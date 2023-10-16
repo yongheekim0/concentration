@@ -69,7 +69,7 @@ header {
 }
 
 .card__face.back {
-  background: crimson;
+  background: sandybrown;
   text-align: center;
   font-size: 15vmin;
   transform: rotateY(180deg);
