@@ -63,6 +63,8 @@ function renders() {
   shuffleCards();
   checkCards();
   resetTurns();
+  stopTimer();
+  resetTimer();
 }
 // event listners
 
@@ -75,6 +77,7 @@ function button() {
     resetTimer();
   });
 }
+
 function easyMode() {
   buttonEasy.addEventListener("click", function () {
     removeMessage();
