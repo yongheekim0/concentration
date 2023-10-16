@@ -16,6 +16,22 @@ const playSetup = {
     },
   },
 };
+
+const IMAGES = {
+  icon0: "assets/icon0.png",
+  icon1: "assets/icon1.png",
+  icon2: "assets/icon2.png",
+  icon3: "assets/icon3.png",
+  icon4: "assets/icon4.png",
+  icon5: "assets/icon5.png",
+  icon6: "assets/icon6.png",
+  icon7: "assets/icon7.png",
+  icon8: "assets/icon8.png",
+  icon9: "assets/icon9.png",
+  icon10: "assets/icon10.png",
+  icon11: "assets/icon11.png",
+};
+
 const flippingBackDelay = 1000;
 const pairDisappearDelay = 300;
 
@@ -42,14 +58,14 @@ function init() {
 
 function renders() {
   renderCards();
-  shuffleAndImageRender();
+  shuffleCards();
   checkCards();
   resetTurns();
 }
 // event listners
 document.querySelector("button").addEventListener("click", function () {
   [...cards].forEach((element) => (element.style.visibility = "visible"));
-  shuffleAndImageRender();
+  shuffleCards();
   resetTurns();
 });
 
@@ -136,9 +152,13 @@ function renderCards() {
     element.appendChild(frontFace).setAttribute("class", "card__face front");
     element.appendChild(backFace).setAttribute("class", "card__face back");
   });
+  [...document.getElementsByClassName("back")].forEach((element) => {
+    const img = document.createElement("img");
+    element.appendChild(img);
+  });
 }
 
-function shuffleAndImageRender() {
+function shuffleCards() {
   let numbers = [];
   for (let i = 0; i < cardNumbers / 2; i++) {
     numbers.push(i);
@@ -155,10 +175,20 @@ function shuffleAndImageRender() {
       "class",
       `card__face ${shuffledNumbers[i]} front`
     );
+    [...backOfcards][i].setAttribute(
+      "class",
+      `card__face ${shuffledNumbers[i]} back`
+    );
     [...cards][i].setAttribute("class", `card ${shuffledNumbers[i]}`);
-    [...backOfcards][i].innerText = shuffledNumbers[i];
+    [...document.querySelectorAll("img")][i].setAttribute(
+      "src",
+      IMAGES[`icon${shuffledNumbers[i]}`]
+    );
+    //[...backOfcards][i].innerText = shuffledNumbers[i];
   }
 }
+
+function renderImages() {}
 
 function result() {
   if ([...cards].every((element) => element.style.visibility === "hidden")) {
