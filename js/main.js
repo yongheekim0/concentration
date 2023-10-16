@@ -1,6 +1,6 @@
 // constant variables
 const boardElement = document.getElementById("board");
-const playSetup = {
+const playSetups = {
   cards24: {
     numbers: 24,
     layout() {
@@ -18,42 +18,43 @@ const playSetup = {
 };
 
 const IMAGES = {
-  icon0: "assets/icon0.png",
-  icon1: "assets/icon1.png",
-  icon2: "assets/icon2.png",
-  icon3: "assets/icon3.png",
-  icon4: "assets/icon4.png",
-  icon5: "assets/icon5.png",
-  icon6: "assets/icon6.png",
-  icon7: "assets/icon7.png",
-  icon8: "assets/icon8.png",
-  icon9: "assets/icon9.png",
-  icon10: "assets/icon10.png",
-  icon11: "assets/icon11.png",
+  icon0: "assets/images/icon0.png",
+  icon1: "assets/images/icon1.png",
+  icon2: "assets/images/icon2.png",
+  icon3: "assets/images/icon3.png",
+  icon4: "assets/images/icon4.png",
+  icon5: "assets/images/icon5.png",
+  icon6: "assets/images/icon6.png",
+  icon7: "assets/images/icon7.png",
+  icon8: "assets/images/icon8.png",
+  icon9: "assets/images/icon9.png",
+  icon10: "assets/images/icon10.png",
+  icon11: "assets/images/icon11.png",
 };
 
 const flippingBackDelay = 1000;
 const pairDisappearDelay = 300;
 
 // cache
-const cards = document.getElementsByClassName("card");
-const frontOfCards = document.getElementsByClassName("front");
-const backOfcards = document.getElementsByClassName("back");
+const cardElements = document.getElementsByClassName("card");
+const frontFaceElements = document.getElementsByClassName("front");
+const backFaceElements = document.getElementsByClassName("back");
 const turnsElement = document.getElementById("turns");
 const buttonNormal = document.getElementById("mode-normal");
 const buttonEasy = document.getElementById("mode-easy");
 
 // state variables
 
-let turnsStart = 0;
-let cardNumbers;
+let aPairOfCardsArray = [];
+let numberOfTurns = 0;
+let numberOfCards;
 let timerId;
 let second = 0;
 
 // renders
 init();
 function init() {
-  messageRender();
+  renderMessage();
   easyMode();
   normalMode();
 }
@@ -61,16 +62,18 @@ function init() {
 function renders() {
   renderCards();
   shuffleCards();
-  checkCards();
+  areThePairMatched();
   resetTurns();
   stopTimer();
   resetTimer();
 }
 // event listners
 
-function button() {
+function renderButtonFunction() {
   document.querySelector("button").addEventListener("click", function () {
-    [...cards].forEach((element) => (element.style.visibility = "visible"));
+    [...cardElements].forEach(
+      (element) => (element.style.visibility = "visible")
+    );
     shuffleCards();
     resetTurns();
     stopTimer();
@@ -80,47 +83,48 @@ function button() {
 
 function easyMode() {
   buttonEasy.addEventListener("click", function () {
+    if (numberOfCards === playSetups.cards16.numbers) return;
     removeMessage();
-    if (cardNumbers === playSetup.cards16.numbers) return;
-    [...cards].forEach((element) => element.remove());
-    cardNumbers = playSetup.cards16.numbers;
-    playSetup.cards16.layout();
+    fetchCardLayout(16);
     renders();
-    button();
+    renderButtonFunction();
   });
 }
 
 function normalMode() {
   buttonNormal.addEventListener("click", function () {
+    if (numberOfCards === playSetups.cards24.numbers) return;
     removeMessage();
-    if (cardNumbers === playSetup.cards24.numbers) return;
-    [...cards].forEach((element) => element.remove());
-    cardNumbers = playSetup.cards24.numbers;
-    playSetup.cards24.layout();
+    fetchCardLayout(24);
     renders();
-    button();
+    renderButtonFunction();
   });
 }
 
-let compareTwoCards = [];
-function checkCards() {
-  [...frontOfCards].forEach((element) =>
+function fetchCardLayout(presetNumber) {
+  [...cardElements].forEach((element) => element.remove());
+  numberOfCards = playSetups[`cards${presetNumber}`].numbers;
+  playSetups[`cards${presetNumber}`].layout();
+}
+
+function areThePairMatched() {
+  [...frontFaceElements].forEach((element) =>
     element.addEventListener("click", function (event) {
-      if (compareTwoCards.length === 2) return;
-      console.log("clicked");
-      addTurns();
+      if (aPairOfCardsArray.length === 2) return;
+      //console.log("clicked");
+      countTurns();
       startTimer();
       event.target.parentNode.classList.toggle("is-flipped");
-      compareTwoCards.push(event.target.parentNode);
+      aPairOfCardsArray.push(event.target.parentNode);
       if (
-        compareTwoCards[0].className.includes("is-flipped") &&
-        compareTwoCards[1] === undefined
+        aPairOfCardsArray[0].className.includes("is-flipped") &&
+        aPairOfCardsArray[1] === undefined
       )
         return;
-      if (compareTwoCards[1]) {
-        if (compareTwoCards[0].className === compareTwoCards[1].className) {
+      if (aPairOfCardsArray[1]) {
+        if (aPairOfCardsArray[0].className === aPairOfCardsArray[1].className) {
           pairMatched();
-          result();
+          showAllCardsWhenFinished();
         } else {
           flippingBack();
         }
@@ -133,36 +137,36 @@ function checkCards() {
 
 function flippingBack() {
   setTimeout(function () {
-    [...compareTwoCards].forEach((element) =>
+    [...aPairOfCardsArray].forEach((element) =>
       element.classList.toggle("is-flipped")
     );
-    compareTwoCards = [];
+    aPairOfCardsArray = [];
   }, flippingBackDelay);
 }
 
 function pairMatched() {
   setTimeout(function () {
-    [...compareTwoCards].forEach(
+    [...aPairOfCardsArray].forEach(
       (element) => (element.style.visibility = "hidden")
     );
-    compareTwoCards = [];
-    result();
+    aPairOfCardsArray = [];
+    showAllCardsWhenFinished();
   }, pairDisappearDelay);
 }
 
 function renderCards() {
-  for (let i = 0; i < cardNumbers; i++) {
-    const card = document.createElement("div");
+  for (let i = 0; i < numberOfCards; i++) {
+    const cardDiv = document.createElement("div");
     document
       .getElementById("board")
-      .appendChild(card)
+      .appendChild(cardDiv)
       .setAttribute("class", "card");
   }
   [...document.getElementsByClassName("card")].forEach((element) => {
-    const frontFace = document.createElement("div");
-    const backFace = document.createElement("div");
-    element.appendChild(frontFace).setAttribute("class", "card__face front");
-    element.appendChild(backFace).setAttribute("class", "card__face back");
+    const frontFaceDiv = document.createElement("div");
+    const backFaceDiv = document.createElement("div");
+    element.appendChild(frontFaceDiv).setAttribute("class", "card__face front");
+    element.appendChild(backFaceDiv).setAttribute("class", "card__face back");
   });
   [...document.getElementsByClassName("back")].forEach((element) => {
     const img = document.createElement("img");
@@ -172,7 +176,7 @@ function renderCards() {
 
 function shuffleCards() {
   let numbers = [];
-  for (let i = 0; i < cardNumbers / 2; i++) {
+  for (let i = 0; i < numberOfCards / 2; i++) {
     numbers.push(i);
     numbers.push(i);
   }
@@ -182,46 +186,48 @@ function shuffleCards() {
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
 
-  for (let i = 0; i < cardNumbers; i++) {
-    [...frontOfCards][i].setAttribute(
+  for (let i = 0; i < numberOfCards; i++) {
+    [...frontFaceElements][i].setAttribute(
       "class",
       `card__face ${shuffledNumbers[i]} front`
     );
-    [...backOfcards][i].setAttribute(
+    [...backFaceElements][i].setAttribute(
       "class",
       `card__face ${shuffledNumbers[i]} back`
     );
-    [...cards][i].setAttribute("class", `card ${shuffledNumbers[i]}`);
+    [...cardElements][i].setAttribute("class", `card ${shuffledNumbers[i]}`);
     [...document.querySelectorAll("img")][i].setAttribute(
       "src",
       IMAGES[`icon${shuffledNumbers[i]}`]
     );
-    //[...backOfcards][i].innerText = shuffledNumbers[i];
+    //[...backFaceElements][i].innerText = shuffledNumbers[i];
   }
 }
 
-function renderImages() {}
-
-function result() {
-  if ([...cards].every((element) => element.style.visibility === "hidden")) {
+function showAllCardsWhenFinished() {
+  if (
+    [...cardElements].every((element) => element.style.visibility === "hidden")
+  ) {
     setTimeout(() => {
-      [...cards].forEach((element) => (element.style.visibility = "visible"));
+      [...cardElements].forEach(
+        (element) => (element.style.visibility = "visible")
+      );
     }, 500);
     stopTimer();
   }
 }
 
-function addTurns() {
-  turnsStart += 1;
-  turnsElement.innerText = `Turns: ${turnsStart}`;
+function countTurns() {
+  numberOfTurns += 1;
+  turnsElement.innerText = `Turns: ${numberOfTurns}`;
 }
 
 function resetTurns() {
-  turnsStart = 0;
-  turnsElement.innerText = `Turns: ${turnsStart}`;
+  numberOfTurns = 0;
+  turnsElement.innerText = `Turns: ${numberOfTurns}`;
 }
 
-function messageRender() {
+function renderMessage() {
   const message = document.createElement("h3");
   boardElement.appendChild(message);
   message.innerHTML = "Choose Difficulty";
@@ -235,13 +241,13 @@ function removeMessage() {
 }
 
 function startTimer() {
-  if (turnsStart === 1) {
+  if (numberOfTurns === 1) {
     timerId = setInterval(function () {
       second++;
       document.getElementById("clock").innerHTML = `TIME: ${second} s`;
     }, 1000);
   }
-  if (turnsStart > 1) return;
+  if (numberOfTurns > 1) return;
 }
 
 function stopTimer() {
