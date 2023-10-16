@@ -26,7 +26,7 @@ body {
 
 .sub-div {
   /* viewport units: percentage of: vh (veiwport height), vw (veiwport width), vmin (min of vw or vh) */
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -38,12 +38,18 @@ header {
   font-size: 4vmin;
   color: darkblue;
   letter-spacing: 1vmin;
+  text-align: center;
+}
+
+section {
+  font-size: 2vmin;
+  color: brown;
 }
 
 #board {
   display: grid;
-  grid-template-columns: 70vmin;
-  grid-template-rows: 70vmin;
+  grid-template-columns: 66vmin;
+  grid-template-rows: 67vmin;
   gap: 1vmin;
   margin-top: 4vmin;
 }
@@ -105,7 +111,7 @@ button:hover {
 
 .mode {
   border-radius: 1vmin;
-  margin: 1vmin;
+  margin: 0.5vmin 1vmin;
   padding: 1vmin 2vmin;
   font-size: 3vmin;
   text-align: center;
@@ -140,11 +146,11 @@ button:hover {
  */
 .state {
   padding: 0.3vmin 2vmin;
-  margin: 2vmin;
+  margin: 1vmin;
   width: 20vmin;
   font-size: 3vmin;
 }
 
-h2 {
-  font-size: 3vmin;
+#clock {
+  text-transform: none;
 }

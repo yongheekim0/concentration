@@ -47,6 +47,8 @@ const buttonEasy = document.getElementById("mode-easy");
 
 let turnsStart = 0;
 let cardNumbers;
+let timerId;
+let second = 0;
 
 // renders
 init();
@@ -63,12 +65,16 @@ function renders() {
   resetTurns();
 }
 // event listners
-document.querySelector("button").addEventListener("click", function () {
-  [...cards].forEach((element) => (element.style.visibility = "visible"));
-  shuffleCards();
-  resetTurns();
-});
 
+function button() {
+  document.querySelector("button").addEventListener("click", function () {
+    [...cards].forEach((element) => (element.style.visibility = "visible"));
+    shuffleCards();
+    resetTurns();
+    stopTimer();
+    resetTimer();
+  });
+}
 function easyMode() {
   buttonEasy.addEventListener("click", function () {
     removeMessage();
@@ -77,6 +83,7 @@ function easyMode() {
     cardNumbers = playSetup.cards16.numbers;
     playSetup.cards16.layout();
     renders();
+    button();
   });
 }
 
@@ -88,6 +95,7 @@ function normalMode() {
     cardNumbers = playSetup.cards24.numbers;
     playSetup.cards24.layout();
     renders();
+    button();
   });
 }
 
@@ -98,6 +106,7 @@ function checkCards() {
       if (compareTwoCards.length === 2) return;
       console.log("clicked");
       addTurns();
+      startTimer();
       event.target.parentNode.classList.toggle("is-flipped");
       compareTwoCards.push(event.target.parentNode);
       if (
@@ -195,6 +204,7 @@ function result() {
     setTimeout(() => {
       [...cards].forEach((element) => (element.style.visibility = "visible"));
     }, 500);
+    stopTimer();
   }
 }
 
@@ -219,4 +229,23 @@ function messageRender() {
 }
 function removeMessage() {
   document.querySelector("h3").style.display = "none";
+}
+
+function startTimer() {
+  if (turnsStart === 1) {
+    timerId = setInterval(function () {
+      second++;
+      document.getElementById("clock").innerHTML = `TIME: ${second} s`;
+    }, 1000);
+  }
+  if (turnsStart > 1) return;
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+}
+
+function resetTimer() {
+  second = 0;
+  document.getElementById("clock").innerHTML = `TIME: ${second} s`;
 }
