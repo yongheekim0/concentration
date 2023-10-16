@@ -154,3 +154,7 @@ button:hover {
 #clock {
   text-transform: none;
 }
+
+.animate__animated.animate__fadeOut {
+  --animate-duration: 0.8s;
+}

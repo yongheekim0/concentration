@@ -32,7 +32,7 @@ const IMAGES = {
   icon11: "assets/images/icon11.png",
 };
 
-const flippingBackDelay = 1000;
+const flippingBackDelay = 800;
 const pairDisappearDelay = 300;
 
 // cache
@@ -71,9 +71,9 @@ function renders() {
 
 function renderButtonFunction() {
   document.querySelector("button").addEventListener("click", function () {
-    [...cardElements].forEach(
+    /* [...cardElements].forEach(
       (element) => (element.style.visibility = "visible")
-    );
+    ); */
     shuffleCards();
     resetTurns();
     stopTimer();
@@ -146,9 +146,11 @@ function flippingBack() {
 
 function pairMatched() {
   setTimeout(function () {
-    [...aPairOfCardsArray].forEach(
-      (element) => (element.style.visibility = "hidden")
-    );
+    [...aPairOfCardsArray].forEach((element) => {
+      element.classList.add("animate__animated");
+      element.classList.add("animate__fadeOut");
+      //element.style.visibility = "hidden";
+    });
     aPairOfCardsArray = [];
     showAllCardsWhenFinished();
   }, pairDisappearDelay);
@@ -206,12 +208,17 @@ function shuffleCards() {
 
 function showAllCardsWhenFinished() {
   if (
-    [...cardElements].every((element) => element.style.visibility === "hidden")
+    [...cardElements].every((element) =>
+      element.classList.contains("animate__fadeOut")
+    )
   ) {
     setTimeout(() => {
-      [...cardElements].forEach(
-        (element) => (element.style.visibility = "visible")
+      [...cardElements].forEach((element) =>
+        element.classList.remove("animate__fadeOut")
       );
+      [...document.querySelectorAll("img")].forEach((element) => {
+        element.setAttribute("class", "animate__animated animate__bounce");
+      });
     }, 500);
     stopTimer();
   }
