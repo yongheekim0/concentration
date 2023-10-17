@@ -17,6 +17,11 @@ const playSetups = {
   },
 };
 
+const SOUNDS = {
+  click: "assets/sounds/click.wav",
+  achievement: "assets/sounds/achievement.wav",
+};
+
 const IMAGES = {
   icon0: "assets/images/icon0.png",
   icon1: "assets/images/icon1.png",
@@ -32,6 +37,7 @@ const IMAGES = {
   icon11: "assets/images/icon11.png",
 };
 
+const audioPlayer = new Audio();
 const flippingBackDelay = 800;
 const pairDisappearDelay = 300;
 
@@ -111,6 +117,7 @@ function areThePairMatched() {
   [...frontFaceElements].forEach((element) =>
     element.addEventListener("click", function (event) {
       if (aPairOfCardsArray.length === 2) return;
+
       //console.log("clicked");
       countTurns();
       startTimer();
@@ -149,6 +156,8 @@ function pairMatched() {
     [...aPairOfCardsArray].forEach((element) => {
       element.classList.add("animate__animated");
       element.classList.add("animate__fadeOut");
+      audioPlayer.src = SOUNDS.click;
+      audioPlayer.play();
       //element.style.visibility = "hidden";
     });
     aPairOfCardsArray = [];
@@ -219,6 +228,8 @@ function showAllCardsWhenFinished() {
       [...document.querySelectorAll("img")].forEach((element) => {
         element.setAttribute("class", "animate__animated animate__bounce");
       });
+      audioPlayer.src = SOUNDS.achievement;
+      audioPlayer.play();
     }, 500);
     stopTimer();
   }
