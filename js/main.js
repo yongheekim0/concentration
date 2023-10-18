@@ -9,7 +9,7 @@ const playSetups = {
     },
   },
   cards16: {
-    numbers: 16,
+    numbers: 2,
     layout() {
       boardElement.style.gridTemplateColumns = "repeat(4, 16vmin)";
       boardElement.style.gridTemplateRows = "repeat(4, 16vmin)";
@@ -81,6 +81,7 @@ function renderButtonFunction() {
       (element) => (element.style.visibility = "visible")
     ); */
     shuffleCards();
+    removeCardAnimation();
     resetTurns();
     stopTimer();
     resetTimer();
@@ -158,7 +159,6 @@ function pairMatched() {
       element.classList.add("animate__fadeOut");
       audioPlayer.src = SOUNDS.click;
       audioPlayer.play();
-      //element.style.visibility = "hidden";
     });
     aPairOfCardsArray = [];
     showAllCardsWhenFinished();
@@ -228,11 +228,20 @@ function showAllCardsWhenFinished() {
       [...document.querySelectorAll("img")].forEach((element) => {
         element.setAttribute("class", "animate__animated animate__bounce");
       });
+
       audioPlayer.src = SOUNDS.achievement;
+      audioPlayer.pause();
       audioPlayer.play();
     }, 500);
     stopTimer();
+    logThePlay();
   }
+}
+
+function removeCardAnimation() {
+  [...document.querySelectorAll("img")].forEach((element) => {
+    element.classList.toggle("animate__bounce");
+  });
 }
 
 function countTurns() {
@@ -275,4 +284,17 @@ function stopTimer() {
 function resetTimer() {
   second = 0;
   document.getElementById("clock").innerHTML = `TIME: ${second} s`;
+}
+
+function logThePlay() {
+  const playLogList = document.createElement("li");
+  let isEasyOrNormal;
+  if ([...cardElements].length === 24) {
+    isEasyOrNormal = "NORMAL";
+  } else isEasyOrNormal = "EASY";
+  playLogList.innerHTML = `${isEasyOrNormal} <strong>|</strong> <strong>${numberOfTurns}</strong> turns <strong>${second}</strong>s`;
+  if ([...document.querySelectorAll("li")].length > 4) {
+    [...document.querySelectorAll("li")][0].remove();
+  }
+  document.querySelector("ol").appendChild(playLogList);
 }
