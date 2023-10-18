@@ -11,24 +11,25 @@
 
 ### What's spacial?
 
-- Play with up to 12 animals
+- Play with up to **12 _cute_ animals**
+- **Bouncing animals** when you pair all of them!
 - Choose difficulty
-- Play log: who played better?
+- **Play log**: who played better?
 
 ### Getting started
 
 1. Choose Easy or Normal
-2. Find the pair by clicking them
-3. You can restart if you want
+2. Click and find the pair of cards
+3. Restart if you want
 
 ### Next steps
 
-- New play mode: show the shuffled cards for a second when stared and speedrun
+- **New play mode**: show the shuffled cards for a second when stared and speedrun
 - Add options for diffrent kinds of cardsets
 
 ### Technologies used
 
 - HTML/CSS/Javascript
 - Potential bugs fixed
-  - Prevent event listener from functioning when clicked
+  - Prevent the event listener from functioning when clicked
   - switch mode and restart seamlessly
