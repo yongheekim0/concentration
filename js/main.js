@@ -9,7 +9,7 @@ const playSetups = {
     },
   },
   cards16: {
-    numbers: 2,
+    numbers: 16,
     layout() {
       boardElement.style.gridTemplateColumns = "repeat(4, 16vmin)";
       boardElement.style.gridTemplateRows = "repeat(4, 16vmin)";
