@@ -77,9 +77,7 @@ function renders() {
 
 function renderButtonFunction() {
   document.querySelector("button").addEventListener("click", function () {
-    /* [...cardElements].forEach(
-      (element) => (element.style.visibility = "visible")
-    ); */
+    aPairOfCardsArray = [];
     shuffleCards();
     removeCardAnimation();
     resetTurns();

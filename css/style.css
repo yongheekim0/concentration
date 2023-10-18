@@ -39,13 +39,19 @@ body {
 }
 
 .sub-div.second > div {
-  text-align: justify;
+  width: 32vmin;
+  height: 30vmin;
   margin-top: 30vmin;
-  width: 25vmin;
+  padding: 2vmin;
+  background-color: rgba(242, 210, 189, 0.2);
+  text-align: justify;
+  border-radius: 3vmin;
+  line-height: 4vmin;
 }
+
 .play-log {
   font-size: 3vmin;
-  letter-spacing: 1px;
+  letter-spacing: 0.1px;
   text-transform: none;
   margin-bottom: 1vmin;
 }
@@ -58,11 +64,14 @@ body {
 }
 ol {
   font-size: 2vmin;
-  padding-inline-start: 2vmin;
+  padding-inline-start: 4vmin;
 }
 
+ol:hover,
 li:hover {
   background-color: bisque;
+  border-radius: 1vmin;
+  scale: 1.02;
 }
 
 header {

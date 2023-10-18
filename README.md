@@ -14,7 +14,7 @@
 - Play with up to **12 _cute_ animals**
 - **Bouncing animals** when you pair all of them!
 - Choose difficulty
-- **Play log**: who played better?
+- **Play log(up to 5)**: who played better?
 
 ### Getting started
 
