@@ -42,7 +42,7 @@ body {
   width: 32vmin;
   height: 30vmin;
   margin-top: 30vmin;
-  padding: 2vmin;
+  padding: 1.5vmin;
   background-color: rgba(242, 210, 189, 0.2);
   text-align: justify;
   border-radius: 3vmin;
@@ -60,9 +60,6 @@ body {
 }
 
 .play-log.list {
-  font-size: 2.5vmin;
-}
-ol {
   font-size: 2vmin;
   padding-inline-start: 4vmin;
 }
