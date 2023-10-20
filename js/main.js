@@ -2,7 +2,7 @@
 const boardElement = document.getElementById("board");
 const playSetups = {
   cards24: {
-    numbers: 2,
+    numbers: 24,
     layout() {
       boardElement.style.gridTemplateColumns = "repeat(6, 16vmin)";
       boardElement.style.gridTemplateRows = "repeat(4, 16vmin)";
