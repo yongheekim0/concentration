@@ -13,10 +13,7 @@ body {
 }
 
 .main-div {
-  /* viewport units: percentage of: vh (veiwport height), vw (veiwport width), vmin (min of vw or vh) */
   height: 100vh;
-  /* width: 45vw; */
-  /* margin-right: 10vmin; */
   padding: 0 10vmin;
   display: flex;
   flex-direction: column;
@@ -25,8 +22,6 @@ body {
 }
 
 .sub-div {
-  /* viewport units: percentage of: vh (veiwport height), vw (veiwport width), vmin (min of vw or vh) */
-  /* height: 100vh; */
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -174,13 +169,6 @@ button:hover {
   background-color: crimson;
 }
 
-/* #state-board {
-  display: inline-block;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
- */
 .state {
   padding: 0.3vmin 2vmin;
   margin: 1vmin;

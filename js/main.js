@@ -51,7 +51,7 @@ const buttonEasy = document.getElementById("mode-easy");
 
 // state variables
 
-let aPairOfCardsArray = [];
+let aPairOfCardsArray = []; //Array that contains up to two elements and it evaluates conditions
 let numberOfTurns = 0;
 let numberOfCards;
 let timerId;
@@ -114,21 +114,21 @@ function fetchCardLayout(presetNumber) {
 
 function areThePairMatched() {
   [...frontFaceElements].forEach((element) =>
-    element.addEventListener("click", function (event) {
-      if (aPairOfCardsArray.length === 2) return;
-
-      //console.log("clicked");
+    element.addEventListener("click", function conditions(event) {
+      if (aPairOfCardsArray.length === 2) return; //Stop event listener for the two flipped cards
       countTurns();
-      startTimer();
+      startTimer(); // Start timer when first click happens
       event.target.parentNode.classList.toggle("is-flipped");
       aPairOfCardsArray.push(event.target.parentNode);
       if (
         aPairOfCardsArray[0].className.includes("is-flipped") &&
         aPairOfCardsArray[1] === undefined
       )
-        return;
+        return; //Stop event listener for the card flipped when it is only one
       if (aPairOfCardsArray[1]) {
+        // when two cards are flipped
         if (aPairOfCardsArray[0].className === aPairOfCardsArray[1].className) {
+          //Evaluate condition
           pairMatched();
           showAllCardsWhenFinished();
         } else {
@@ -190,7 +190,7 @@ function shuffleCards() {
     numbers.push(i);
   }
 
-  const shuffledNumbers = numbers
+  const shuffledNumbers = numbers // Shuffle a pair of numbers from 0 to 12
     .map((value) => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
@@ -209,7 +209,6 @@ function shuffleCards() {
       "src",
       IMAGES[`icon${shuffledNumbers[i]}`]
     );
-    //[...backFaceElements][i].innerText = shuffledNumbers[i];
   }
 }
 
@@ -292,6 +291,7 @@ function logThePlay() {
   } else isEasyOrNormal = "EASY";
   playLogList.innerHTML = `${isEasyOrNormal} <strong>|</strong> <strong>${numberOfTurns}</strong> turns <strong>${second}</strong>s`;
   if ([...document.querySelectorAll("li")].length > 4) {
+    //contains up to 5 logs
     [...document.querySelectorAll("li")][0].remove();
   }
   document.querySelector("ol").appendChild(playLogList);
