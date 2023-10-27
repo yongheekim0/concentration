@@ -26,6 +26,7 @@
 
 - **New play mode**: show the shuffled cards for a second when stared and speedrun
 - Add options for diffrent kinds of cardsets
+- Add more CSS
 
 ### Technologies used
 
